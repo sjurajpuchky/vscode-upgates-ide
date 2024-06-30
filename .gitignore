@@ -1,0 +1,8 @@
+*.vsix
+package-lock.json
+.idea
+.vscodeignore
+.eslintrc.json
+node_modules
+.vscode
+
