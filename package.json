@@ -1,5 +1,6 @@
 {
   "name": "upgates-ide",
+  "publisher": "vendortumise",
   "displayName": "UpGates IDE",
   "description": "Manage templates for eCommerce solution UpGates",
   "license": "Commercial",
