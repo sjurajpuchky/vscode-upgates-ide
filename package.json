@@ -1,0 +1,141 @@
+{
+  "name": "upgates-ide",
+  "displayName": "UpGates IDE",
+  "description": "Manage templates for eCommerce solution UpGates",
+  "license": "Commercial",
+  "repository": "https://github.com/sjurajpuchky/vscode-upgates-ide.git",
+  "pricing": "Free",
+  "version": "1.0.0",
+  "icon": "images/icon.png",
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "sponsor": {
+    "url": "https://github.com/sponsors/sjurajpuchky"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.createProject",
+    "onCommand:extension.deployFile",
+    "onCommand:extension.deployFolder",
+    "onCommand:extension.createFile",
+    "onCommand:extension.createFolder",
+    "onCommand:extension.downloadFolder",
+    "onCommand:extension.downloadFile",
+    "onLanguage:javascript",
+    "onLanguage:css",
+    "onLanguage:scss",
+    "onLanguage:phtml"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "phtml",
+        "extensions": [".phtml"],
+        "aliases": ["PHTML", "phtml", "UpGates Latte template"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "phtml",
+        "scopeName": "text.phtml",
+        "path": "./syntaxes/phtml.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "extension.createProject",
+        "title": "Create Project From UpGates API"
+      },
+      {
+        "command": "extension.createFile",
+        "title": "Create File on Upgates API"
+      },
+      {
+        "command": "extension.createFolder",
+        "title": "Create Folder on Upgates API"
+      },
+      {
+        "command": "extension.downloadFolder",
+        "title": "Download Folder from Upgates API"
+      },
+      {
+        "command": "extension.downloadFile",
+        "title": "Download File from Upgates API"
+      },
+      {
+        "command": "extension.deployFile",
+        "title": "Deploy File to Upgates API"
+      },
+      {
+        "command": "extension.deployFolder",
+        "title": "Deploy Folder to Upgates API"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.deployFile",
+          "when": "resourceLangId == javascript || resourceLangId == css || resourceLangId == scss || resourceLangId == phtml",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.downloadFile",
+          "when": "resourceLangId == javascript || resourceLangId == css || resourceLangId == scss || resourceLangId == phtml",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.deployFolder",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.downloadFolder",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.createFile",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        },
+        {
+          "command": "extension.createFolder",
+          "when": "explorerResourceIsFolder",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "install": "cp -r images out && cp -r syntaxes out && cp language-configuration.json out && cp *.md out && cp *.txt out && vsce package && code --install-extension *.vsix",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "20.2.5",
+    "@types/request": "^2.48.12",
+    "@types/vscode": "^1.90.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "@vscode/test-electron": "^2.3.2",
+    "eslint": "^8.41.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "request": "^2.88.2",
+    "requests": "^0.3.0"
+  }
+}

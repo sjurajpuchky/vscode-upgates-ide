@@ -1,0 +1,27 @@
+{
+  "scopeName": "text.phtml",
+  "patterns": [
+    {
+      "include": "text.html.basic"
+    },
+    {
+      "begin": "{",
+      "end": "}",
+      "name": "meta.embedded.block.latte",
+      "patterns": [
+        {
+          "include": "source.php"
+        }
+      ]
+    },
+    {
+      "begin": "\\{\\*",
+      "end": "\\*\\}",
+      "name": "comment.block.latte"
+    }
+  ],
+  "repository": {},
+  "fileTypes": ["phtml"],
+  "name": "Latte",
+  "patterns": []
+}
