@@ -18,6 +18,7 @@ function activate(context) {
     // Register commands
     const commands = [
         { command: 'extension.createProject', callback: createProjectDisposal },
+        { command: 'extension.createBackup', callback: createBackupDisposal },
         { command: 'extension.deployFile', callback: deployFileDisposal },
         { command: 'extension.downloadFolder', callback: downloadFolderDisposal },
         { command: 'extension.downloadFile', callback: downloadFileDisposal },
@@ -69,6 +70,21 @@ async function createProjectDisposal(outputChannel) {
         }
         vscode.window.showInformationMessage('Project downloaded successfully.');
         outputChannel.appendLine('Project downloaded successfully.');
+    }
+    catch (error) {
+        handleError(error, outputChannel);
+    }
+}
+async function createBackupDisposal(outputChannel) {
+    try {
+        const rootPath = await getRootPath();
+        const authConfig = await getAuthConfig(rootPath, outputChannel);
+        if (!authConfig) {
+            return;
+        }
+        await createBackupByApi(authConfig.apiUrl, authConfig.auth, outputChannel);
+        vscode.window.showInformationMessage('Project backup created successfully.');
+        outputChannel.appendLine('Project byckup created successfully.');
     }
     catch (error) {
         handleError(error, outputChannel);
@@ -420,6 +436,43 @@ async function createFolderOnApi(apiUrl, auth, rootPath, folderPath, outputChann
                 }
             }
             outputChannel.appendLine(`Folder ${folderPath} created on API successfully.`);
+            resolve();
+        });
+    });
+}
+async function createBackupByApi(apiUrl, auth, outputChannel) {
+    outputChannel.appendLine('Creating backup by API');
+    const currentTime = (new Date()).toString();
+    const data = {
+        name: `Backup from VS Code - ${currentTime}`
+    };
+    return new Promise((resolve, reject) => {
+        request({
+            method: 'POST',
+            url: `${apiUrl}/graphics/backups`,
+            headers: {
+                "Authorization": auth,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        }, (error, response, body) => {
+            if (error) {
+                outputChannel.appendLine(`Error: ${error.message}`);
+                return reject(new APIError(`Error: ${error.message}`, undefined));
+                return;
+            }
+            if (response.statusCode != 200) {
+                return reject(new APIError(`Failed with status code: ${response.statusCode}`, undefined));
+                return;
+            }
+            else {
+                const parsedBody = JSON.parse(body);
+                if (parsedBody.success === false) {
+                    return reject(new APIError("Operation error", parsedBody.errors));
+                    return;
+                }
+            }
+            outputChannel.appendLine(`Backup ${data.name} created by API successfully.`);
             resolve();
         });
     });

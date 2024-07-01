@@ -1,8 +1,11 @@
-# UpGates IDE
-![UpGates IDE](./images/icon.png)
+# UpGates Template Editor VS Code integration
+
+
+<img alt="Logo" src="./images/icon.png" width="128"/>
+
 ## Description
 
-Manage templates for eCommerce solution UpGates with your favorite VS Code.
+Manage templates for eCommerce solution <img alt="UpGates" src="./images/upgates-logo.png" width="128" /> with your favorite VS Code.
 
 ## Features
 
@@ -25,6 +28,10 @@ Manage templates for eCommerce solution UpGates with your favorite VS Code.
 5. Run the command `Create Project From UpGates API`.
 6. Enter the required API credentials (URL, Username, Password).
 7. The project files will be downloaded and saved as a template.
+
+### Create Backup by UpGates API
+1. Open the Command Palette (`Ctrl+Shift+P`).
+2. Run the command `Create Backup of Project by UpGates API`.
 
 ### Deploy File
 

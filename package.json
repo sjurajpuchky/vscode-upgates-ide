@@ -6,7 +6,7 @@
   "license": "Commercial",
   "repository": "https://github.com/sjurajpuchky/vscode-upgates-ide.git",
   "pricing": "Free",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.90.0"
@@ -51,6 +51,10 @@
       {
         "command": "extension.createProject",
         "title": "Create Project From UpGates API"
+      },
+      {
+        "command": "extension.createBackup",
+        "title": "Create Backup of Project by UpGates API"
       },
       {
         "command": "extension.createFile",
